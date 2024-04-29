@@ -3,9 +3,10 @@
         Return _
             "Server=localhost" &
             ";Database=" & str_Database &
-            ";Integrated Security=SSPI" &
             ";Application Name=" & str_Application &
-            ";MultipleActiveResultSets=True"
+            ";MultipleActiveResultSets=True" &
+            ";Trusted_Connection=yes" &
+            ";Encrypt=false"  'not advisable but will use for now to get it to work
     End Function
 
     Public Function ConnectionLocal(str_Database As String, Optional str_Application As String = "Unknown") As Microsoft.Data.SqlClient.SqlConnection
