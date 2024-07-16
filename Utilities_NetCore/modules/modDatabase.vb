@@ -1,16 +1,16 @@
 ﻿Public Module modDatabase
-    Public Function ConnectionString_Local(str_Database As String, Optional str_Application As String = "Unknown") As String
+    Public Function ConnectionString(piServer As String, piDatabase As String, piUsername As String, piPassword As String, Optional piApplication As String = "Unknown") As String
         Return _
-            "Server=localhost" &
-            ";Database=" & str_Database &
-            ";Application Name=" & str_Application &
+            "Server=" & piServer &
+            ";Database=" & piDatabase &
+            ";Application Name=" & piApplication &
             ";MultipleActiveResultSets=True" &
-            ";Trusted_Connection=yes" &
-            ";Encrypt=false"  'not advisable but will use for now to get it to work
+            ";UID=" & piUsername &
+            ";PWD=" & piPassword
     End Function
 
-    Public Function ConnectionLocal(str_Database As String, Optional str_Application As String = "Unknown") As Microsoft.Data.SqlClient.SqlConnection
-        Dim objl_Connection As New Microsoft.Data.SqlClient.SqlConnection(ConnectionString_Local(str_Database, str_Application))
+    Public Function Connection(piServer As String, piDatabase As String, piUsername As String, piPassword As String, Optional piApplication As String = "Unknown") As Microsoft.Data.SqlClient.SqlConnection
+        Dim objl_Connection As New Microsoft.Data.SqlClient.SqlConnection(ConnectionString(piServer, piDatabase, piUsername, piPassword, piApplication))
         objl_Connection.Open()
         Return objl_Connection
     End Function
