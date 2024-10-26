@@ -14,4 +14,10 @@
         objl_Connection.Open()
         Return objl_Connection
     End Function
+
+    Public Function Connection(piConnectionString As String) As Microsoft.Data.SqlClient.SqlConnection
+        Dim objl_Connection As New Microsoft.Data.SqlClient.SqlConnection(piConnectionString)
+        objl_Connection.Open()
+        Return objl_Connection
+    End Function
 End Module
