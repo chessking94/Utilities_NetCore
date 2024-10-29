@@ -68,7 +68,7 @@
 
             objl_CMD.CommandText =
                 "
-                    INSERT INTO HuntHome.Logs.Entries (ScriptName, FileDate, ScriptType, LogDate, LogTime, [Function], LevelID, Message)
+                    INSERT INTO HuntHome.Logs.Entries (ProgramName, FileDate, [Language], LogDate, LogTime, [Function], LevelID, [Message])
                     VALUES (@ProgramName, GETDATE(), @Language, CAST(GETDATE() AS DATE), CAST(GETDATE() AS TIME(3)), @Function, @LevelID, @Message)
 
                     SELECT @@IDENTITY
