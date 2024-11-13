@@ -55,6 +55,8 @@
     ''' Table key if record was inserted, -1 if process failed
     ''' </returns>
     Private Function LogDatabase(piProgram As String, piLanguage As String, piFunction As String, piLevel As eLogLevel, piMessage As String) As Long
+        Dim lngl_Return As Long
+
         Try
 #If DEBUG Then
             Dim strl_ConnectionString = Environment.GetEnvironmentVariable("ConnectionStringDebug")
@@ -80,23 +82,31 @@
             objl_CMD.Parameters.AddWithValue("@LevelID", piLevel)
             objl_CMD.Parameters.AddWithValue("@Message", piMessage)
 
-            Dim lngl_Return As Long = objl_CMD.ExecuteScalar
+            lngl_Return = objl_CMD.ExecuteScalar
 
             objl_CMD.Connection.Close()
             objl_CMD.Connection.Dispose()
             objl_CMD.Dispose()
 
-            Select Case piLevel
-                Case eLogLevel.ERROR, eLogLevel.CRITICAL
-                    modNotifications.SendTelegramMessage(piMessage)  'no need to handle exceptions here, that is handled in the method
-            End Select
-
-            Return lngl_Return
-
         Catch ex As Exception
-            Return -1
+            lngl_Return = -1
 
         End Try
+
+        'no need to handle exceptions here, that is handled in the SendTelegramMessage method
+        If lngl_Return > 0 Then
+            'successful, only send Telegram message if level was severe enough
+            Select Case piLevel
+                Case eLogLevel.ERROR, eLogLevel.CRITICAL
+                    modNotifications.SendTelegramMessage(piMessage)
+            End Select
+        Else
+            'something unexpected happened, send a message
+            Dim errorMessage As String = $"Unable to log message to database, DB must be offline. Program: {piProgram}"
+            modNotifications.SendTelegramMessage(errorMessage)
+        End If
+
+        Return lngl_Return
     End Function
 
     Private Function LogFile() As String
