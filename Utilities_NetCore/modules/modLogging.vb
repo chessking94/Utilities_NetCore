@@ -56,6 +56,7 @@
     ''' </returns>
     Private Function LogDatabase(piProgram As String, piLanguage As String, piFunction As String, piLevel As eLogLevel, piMessage As String) As Long
         Dim lngl_Return As Long
+        Dim strl_Exception As String = ""
 
         Try
 #If DEBUG Then
@@ -90,6 +91,7 @@
 
         Catch ex As Exception
             lngl_Return = -1
+            strl_Exception = ex.Message
 
         End Try
 
@@ -102,7 +104,7 @@
             End Select
         Else
             'something unexpected happened, send a message
-            Dim errorMessage As String = $"Unable to log message to database, DB must be offline. Program: {piProgram}"
+            Dim errorMessage As String = $"Unable to log message to database: {strl_Exception}. Program: {piProgram}"
             modNotifications.SendTelegramMessage(errorMessage)
         End If
 
