@@ -25,9 +25,9 @@ Public Module modDatabase
 
     Public Function Connection() As SqlConnection
 #If DEBUG Then
-        Dim strl_ConnectionString = Environment.GetEnvironmentVariable("ConnectionStringDebug");
+        Dim strl_ConnectionString = Environment.GetEnvironmentVariable("ConnectionStringDebug")
 #Else
-        Dim strl_ConnectionString = Environment.GetEnvironmentVariable("ConnectionStringRelease");
+        Dim strl_ConnectionString = Environment.GetEnvironmentVariable("ConnectionStringRelease")
 #End If
         Dim objl_Connection As New SqlConnection(strl_ConnectionString)
         objl_Connection.Open()
