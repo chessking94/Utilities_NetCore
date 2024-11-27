@@ -37,7 +37,7 @@
     ''' <param name="piMessage"></param>
     ''' <returns>Always 0</returns>
     Private Function LogConsole(piFunction As String, piLevel As eLogLevel, piMessage As String) As Integer
-        Dim strl_Line = $"{Date.Now:yyyy-MM-dd HH:mm:ss,fff}\t{piFunction}\t{piLevel}\t{piMessage}"
+        Dim strl_Line = $"{Date.Now:yyyy-MM-dd HH:mm:ss,fff} | {piFunction} | {piLevel} | {piMessage}"
         Console.WriteLine(strl_Line)
 
         Return 0
