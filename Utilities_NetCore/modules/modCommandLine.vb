@@ -31,26 +31,32 @@ Public Module modCommandLine
 
     Public Function RunCommand(pi_command As String, Optional pi_workingDir As String = Nothing, Optional pi_arguments As String = Nothing, Optional pi_permanent As Boolean = False) As Integer
         'based on https://stackoverflow.com/a/10263144
-        Dim process As Process = New Process()
-        Dim processInfo As ProcessStartInfo = New ProcessStartInfo()
-        processInfo.CreateNoWindow = True
+        Try
+            Dim process As Process = New Process()
+            Dim processInfo As ProcessStartInfo = New ProcessStartInfo()
+            processInfo.CreateNoWindow = True
 
-        If Not Directory.Exists(pi_workingDir) Then
-            Throw New DirectoryNotFoundException
-        End If
+            If pi_workingDir Is Nothing OrElse Not Directory.Exists(pi_workingDir) Then
+                pi_workingDir = Environment.GetFolderPath(Environment.SpecialFolder.System)  'C:\Windows\System32 on Windows
+            End If
 
-        If Not String.IsNullOrWhiteSpace(pi_workingDir) Then processInfo.WorkingDirectory = pi_workingDir
-        processInfo.Arguments = " " + If(pi_permanent = True, "/K", "/C") + " " + pi_command
+            If Not String.IsNullOrWhiteSpace(pi_workingDir) Then processInfo.WorkingDirectory = pi_workingDir
+            processInfo.Arguments = " " + If(pi_permanent = True, "/K", "/C") + " " + pi_command
 
-        If Not String.IsNullOrWhiteSpace(pi_arguments) Then
-            processInfo.Arguments += " "
-            processInfo.Arguments += pi_arguments
-        End If
-        processInfo.FileName = "cmd.exe"
-        process.StartInfo = processInfo
-        process.Start()
-        process.WaitForExit()
+            If Not String.IsNullOrWhiteSpace(pi_arguments) Then
+                processInfo.Arguments += " "
+                processInfo.Arguments += pi_arguments
+            End If
+            processInfo.FileName = "cmd.exe"
+            process.StartInfo = processInfo
+            process.Start()
+            process.WaitForExit()
 
-        Return process.ExitCode
+            Return process.ExitCode
+
+        Catch ex As Exception
+            Return -1
+
+        End Try
     End Function
 End Module
