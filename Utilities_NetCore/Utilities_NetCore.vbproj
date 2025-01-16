@@ -3,6 +3,11 @@
   <PropertyGroup>
     <RootNamespace>Utilities_NetCore</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Utilities_NetCore</Title>
+    <Authors>$(AssemblyName)</Authors>
+    <Version>1.0.0</Version>
+    <Description>A collection of shared utilities for local development.</Description>
   </PropertyGroup>
 
   <ItemGroup>
