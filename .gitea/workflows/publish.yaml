@@ -2,7 +2,7 @@ name: Package Utilities_NetCore
 on:
   push:
     branches:
-      - main
+      - master
 
 defaults:
   run:
