@@ -6,7 +6,7 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>Utilities_NetCore</Title>
     <Authors>$(AssemblyName)</Authors>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Description>A collection of shared utilities for local development.</Description>
   </PropertyGroup>
 
